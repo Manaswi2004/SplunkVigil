@@ -1,0 +1,11 @@
+user,count,avg_bytes
+jdoe,20,1200
+asmith,35,950
+mjones,100,4000
+| eval risk_score = case(
+    anomaly_score > 0.9, "HIGH",
+    anomaly_score > 0.7, "MEDIUM",
+    anomaly_score > 0.5, "LOW",
+    true(), "NONE"
+)
+| where risk_score != "NONE"
